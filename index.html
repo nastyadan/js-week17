@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+
+            text-align: center;
+            background-color: lavenderblush;
+        }
+
+        .div-with-snp {
+            margin: 30px;
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .div-with-input {
+            display: flex;
+            justify-content: center;
+            margin: 30px;
+
+        }
+
+        .btn {
+            background-color: lightpink;
+            border: 2px solid rgb(248, 143, 192);
+            width: 100px;
+            height: 25px;
+        }
+
+        .btn_hover:hover {
+            border: 2px solid rgb(241, 99, 170);
+            color: white;
+        }
+
+        input {
+            margin: 0 10px;
+
+        }
+
+        .div-with-textarea {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+
+        }
+
+        .textarea {
+            width: 60%;
+            margin: 20px 40px;
+            justify-content: center;
+        }
+
+        .btn2 {
+            background-color: lightpink;
+            border: 2px solid rgb(248, 143, 192);
+            width: 30%;
+            height: 40px;
+            margin: 15px 60px;
+        }
+
+
+        .btn3 {
+            background-color: lightpink;
+            border: 2px solid rgb(248, 143, 192);
+            width: 30%;
+            height: 40px;
+            margin: 15px 60px;
+        }
+
+        .input {
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body onload="formatDate(date)">
+    <h2>Преобразование ФИО</h2>
+    <div class="div-with-input">
+        <label for="snp">Введите фамилию, имя и отчество:</label>
+        <input type="text" name="snp" id="input0">
+        <button class="btn" onclick="getSnp()">Готово</button>
+    </div>
+
+    <div class="div-with-snp">
+        <div class="div-with-input">
+            <label for="s">Фамилия:</label>
+            <input type="text" name="s" id="input1"></div>
+        <div class="div-with-input">
+            <label for="n">Имя:</label>
+            <input type="text" name="n" id="input2">
+        </div>
+        <div class="div-with-input">
+            <label for="p">Отчество:</label>
+            <input type="text" name="p" id="input3">
+        </div>
+
+    </div>
+
+    <h2>Спам-фильтр (виагра)</h2>
+    <div class="div-with-textarea">
+        <textarea class="textarea" name="" id="textarea1" cols="60" rows="10" placeholder="Как дела?"></textarea>
+        <button class="btn2 btn_hover" onclick="checkSpam()">Отправить</button>
+        <textarea class="textarea" name="" id="textarea2" cols="60" rows="10"></textarea>
+    </div>
+
+
+
+    <h2>Генератор 10 случайных чисел</h2>
+    <button class="btn3 btn_hover" onclick="chooseNum()">Сгенерировать числа</button>
+    <div class="div-with-input">
+        <label for="in1">Ряд чисел:</label>
+        <input class="input" type="text" name="in1" id="in1">
+    </div>
+    <div class="div-with-input">
+        <label for="in2">Минимальное число:</label>
+        <input class="input" type="number" name="in2" id="in2">
+    </div>
+    <div class="div-with-input">
+        <label for="in3">Максимальное число:</label>
+        <input class="input" type="number" name="in3" id="in3">
+    </div>
+    <div class="div-with-input">
+        <label for="in4">Среднее арифметическое:</label>
+        <input class="input" type="number" name="in4" id="in4">
+    </div>
+    <div class="div-with-input">
+        <label for="in5">Сумма чисел:</label>
+        <input class="input" type="number" name="in5" id="in5">
+    </div>
+    <div class="div-with-input">
+        <label for="in6">Произведение чисел:</label>
+        <input class="input" type="number" name="in6" inputmode="in6">
+    </div>
+    <script>
+        //первое задание
+        let snp = document.getElementById("input0");
+
+        function getSnp() {
+
+            if (snp.value.match(/^[а-яА-ЯёЁa\-\ ]+$/)) {
+
+                let array = snp.value.toString().replace(/^ +| +$|( ) +/g, " ").trim().split(" ");
+
+                console.log(array);
+                document.getElementById("input1").value = (array[0]);
+                document.getElementById("input2").value = (array[1]);
+                document.getElementById("input3").value = (array[2]);
+
+                let name = document.getElementById("input2").value;
+                let correctName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+                document.getElementById("input2").value = correctName;
+
+                let surname = document.getElementById("input1").value;
+                let correctSurame = surname.charAt(0).toUpperCase() + surname.slice(1).toLowerCase();
+                document.getElementById("input1").value = correctSurame;
+
+                let patronymic = document.getElementById("input3").value;
+                let correctPatronymic = patronymic.charAt(0).toUpperCase() + patronymic.slice(1).toLowerCase();
+                document.getElementById("input3").value = correctPatronymic;
+
+            } else {
+                alert("Введите ФИО, используя кириллицу")
+            };
+        }
+        //второе задание
+
+        function checkSpam() {
+
+            let comment = document.getElementById("textarea1").value.toLowerCase().replace(/виагра/g, "***");
+            console.log(comment);
+            document.getElementById("textarea2").innerHTML += `Новый комментарий: ${comment} \n`;
+
+        }
+
+        //третье задание
+        function formatDate(date) {
+            let diff = new Date() - date;
+            let sec = Math.floor(diff / 1000);
+            let min = Math.floor(diff / 60000);
+            let arrayDate = date;
+
+            if (diff < 1000) {
+                return 'прямо сейчас';
+            }
+
+            if (sec < 60) {
+                return sec + 'сек. назад';
+            }
+
+            if (min < 60) {
+                return min + 'мин. назад';
+            } else {
+                arrayDate = [
+                    '0' + arrayDate.getDate(),
+                    '0' + (arrayDate.getMonth() + 1),
+                    '' + arrayDate.getFullYear(),
+                    '0' + arrayDate.getHours(),
+                    '0' + arrayDate.getMinutes()
+                ].map(component => component.slice(-2));
+
+                return arrayDate.slice(0, 3).join('.') + ' ' + arrayDate.slice(3).join(':');
+            }
+
+        }
+        // alert(formatDate(new Date(new Date - 1)));
+
+        //alert(formatDate(new Date(new Date - 30 * 1000)));
+
+        //alert(formatDate(new Date(new Date - 5 * 60 * 1000)));
+        //alert(formatDate(new Date(new Date - 86400 * 1000)));
+        //четвертое задание
+        function chooseNum() {
+            let min = -10;
+            let max = 10;
+            let arrayNum = [];
+            arrayNum.push(Math.floor(Math.random() * (max - min + 1)) + min);
+            arrayNum.push(Math.floor(Math.random() * (max - min + 1)) + min);
+            arrayNum.push(Math.floor(Math.random() * (max - min + 1)) + min);
+            arrayNum.push(Math.floor(Math.random() * (max - min + 1)) + min);
+            arrayNum.push(Math.floor(Math.random() * (max - min + 1)) + min);
+            arrayNum.push(Math.floor(Math.random() * (max - min + 1)) + min);
+            arrayNum.push(Math.floor(Math.random() * (max - min + 1)) + min);
+            arrayNum.push(Math.floor(Math.random() * (max - min + 1)) + min);
+            arrayNum.push(Math.floor(Math.random() * (max - min + 1)) + min);
+            arrayNum.push(Math.floor(Math.random() * (max - min + 1)) + min);
+            console.log(arrayNum);
+
+
+            document.getElementById("in1").value = arrayNum.join(", ");
+            document.getElementById("in2").value = Math.min.apply(null, arrayNum);
+            document.getElementById("in3").value = Math.max.apply(null, arrayNum);
+            let sumNum = 0;
+            for (i = 0; i <= arrayNum.length - 1; i++) {
+                sumNum += arrayNum[i];
+            }
+            document.getElementById("in5").value = sumNum;
+            avgNum = (sumNum / arrayNum.length);
+            document.getElementById("in4").value = avgNum;
+
+
+            let mul = 1;
+            for (i = 0; i < arrayNum.length; i++) {
+                mul * arrayNum[i];
+            }
+            document.getElementById("in6").value = mul;
+        }
+    </script>
+</body>
+
+</html>
