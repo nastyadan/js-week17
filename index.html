@@ -118,17 +118,13 @@
         <div class="divChat"> <input type="text" name="author" id="author"></div>
         <div class="divChat"> <label for="comment">Комментарий:</label></div>
         <div class="divChat"> <textarea type="text" name="comment" id="comment" cols="60" rows="10"></textarea></div>
-        <button class="btn2 btn_hover" onclick="createChat()">Отправить</button>
+        <button class="btn2 btn_hover" onclick="createChat()" id="button">Отправить</button>
         <div class="divChat" id="chat">
             <p>Чат</p>
-            <p><img id="avatar1" src="" alt=""></p>
+            <div id="avatar1"></div>
         </div>
 
 
-        <textarea class="textarea" name="" id="textarea1" cols="60" rows="10" placeholder="Как дела?"></textarea>
-
-        <textarea class="textarea" name="" id="textarea2" cols="60" rows="10"></textarea>
-        <div id="chat"></div>
     </div>
 
 
@@ -191,16 +187,20 @@
             };
         }
         //второе задание
+
+
         document.addEventListener('DOMContentLoaded', function (event) {
-            let name1 = localStorage.getItem('name1');
+            let name1 = localStorage.getItem('author');
             if (name1 !== null) {
                 document.getElementById("author").value = name1;
             }
         })
-
-        function sendMessage(author, comment) {
-            document.getElementById("chat").innerHTML += `<span>${author}:</span> <span>${comment}<span> <br>\n`;
-        }
+        document.addEventListener('DOMContentLoaded', function (event) {
+            let photo = localStorage.getItem('avatar');
+            if (photo !== null) {
+                document.getElementById("avatar").value = photo;
+            }
+        })
 
         function createChat() {
 
@@ -208,16 +208,27 @@
             let author = document.getElementById("author").value;
 
 
-            if (localStorage.getItem('name1') == null) {
-                localStorage.setItem('name1', author);
+            if (localStorage.getItem('author') == null) {
+                localStorage.setItem('author', author);
             }
 
             sendMessage(author, comment);
-            console.log(comment);
-            console.log(author);
-            console.log(name);
+
+
+            let avatarImg = '<img src="' + document.getElementById('avatar')
+                .value + '" alt="Image" />';
+            document.getElementById('avatar1').innerHTML = avatarImg;
+            if (localStorage.getItem('avatar') == null) {
+                localStorage.setItem('avatar', avatarImg);
+            }
 
         }
+
+        function sendMessage(author, comment) {
+            document.getElementById("chat").innerHTML +=
+                `<span>${author}:</span> <span>${comment}<span>  <br>\n`;
+        }
+
 
         //третье задание
         function formatDate(date) {
