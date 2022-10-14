@@ -46,11 +46,16 @@
 
         }
 
-        .div-with-textarea {
+        .div-chat {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
 
+        }
+
+        .divChat {
+            margin: 10px auto;
+            width: 80vw;
         }
 
         .textarea {
@@ -82,7 +87,7 @@
     </style>
 </head>
 
-<body onload="formatDate(date)">
+<body>
     <h2>Преобразование ФИО</h2>
     <div class="div-with-input">
         <label for="snp">Введите фамилию, имя и отчество:</label>
@@ -106,10 +111,24 @@
     </div>
 
     <h2>Спам-фильтр (виагра)</h2>
-    <div class="div-with-textarea">
+    <div class="div-chat">
+        <div class="divChat"> <label for="avatar">Ссылка на аватарку:</label></div>
+        <div class="divChat"> <input type="text" name="avatar" id="avatar"></div>
+        <div class="divChat"> <label for="author">Имя:</label></div>
+        <div class="divChat"> <input type="text" name="author" id="author"></div>
+        <div class="divChat"> <label for="comment">Комментарий:</label></div>
+        <div class="divChat"> <textarea type="text" name="comment" id="comment" cols="60" rows="10"></textarea></div>
+        <button class="btn2 btn_hover" onclick="createChat()">Отправить</button>
+        <div class="divChat" id="chat">
+            <p>Чат</p>
+            <p><img id="avatar1" src="" alt=""></p>
+        </div>
+
+
         <textarea class="textarea" name="" id="textarea1" cols="60" rows="10" placeholder="Как дела?"></textarea>
-        <button class="btn2 btn_hover" onclick="checkSpam()">Отправить</button>
+
         <textarea class="textarea" name="" id="textarea2" cols="60" rows="10"></textarea>
+        <div id="chat"></div>
     </div>
 
 
@@ -172,12 +191,31 @@
             };
         }
         //второе задание
+        document.addEventListener('DOMContentLoaded', function (event) {
+            let name1 = localStorage.getItem('name1');
+            if (name1 !== null) {
+                document.getElementById("author").value = name1;
+            }
+        })
 
-        function checkSpam() {
+        function sendMessage(author, comment) {
+            document.getElementById("chat").innerHTML += `<span>${author}:</span> <span>${comment}<span> <br>\n`;
+        }
 
-            let comment = document.getElementById("textarea1").value.toLowerCase().replace(/виагра/g, "***");
+        function createChat() {
+
+            let comment = document.getElementById("comment").value.toLowerCase().replace(/виагра/g, "***");
+            let author = document.getElementById("author").value;
+
+
+            if (localStorage.getItem('name1') == null) {
+                localStorage.setItem('name1', author);
+            }
+
+            sendMessage(author, comment);
             console.log(comment);
-            document.getElementById("textarea2").innerHTML += `Новый комментарий: ${comment} \n`;
+            console.log(author);
+            console.log(name);
 
         }
 
